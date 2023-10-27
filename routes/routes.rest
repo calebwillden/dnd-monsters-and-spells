@@ -1,34 +1,53 @@
+@local = http://localhost:8080
+@deployed = renderurl
+@host = {{local}}
+
 //*******************************************************************************
 // Localhost
 //*******************************************************************************
 ### Root
-GET http://localhost:8080/ HTTP/1.1
+GET {{host}}/ HTTP/1.1
 
-### SPELLS
+////////////
+// SPELLS
+////////////
+
 ### Get All Spells
-GET http://localhost:8080/spells HTTP/1.1
+GET {{host}}/spells HTTP/1.1
 
 ### Get Spell By Id
-GET http://localhost:8080/spells/653adc767f20bf502d6802e6 HTTP/1.1
+GET {{host}}/spells/653af14334871ac29de9fb37 HTTP/1.1
 
 ### Create Spell
-POST http://localhost:8080/spells HTTP/1.1
+POST {{host}}/spells HTTP/1.1
 content-type: application/json
-
 {
     "name": "Magic Missile",
     "description": "Pew pew!"
 }
 
-### MONSTERS
+### Update Spell
+POST {{host}}/spells/653af14334871ac29de9fb37 HTTP/1.1
+content-type: application/json
+{
+    "description": "Pew pew PEW!"
+}
+
+### Delete Spell
+POST {{host}}/spells HTTP/1.1
+
+////////////
+// MONSTERS
+////////////
+
 ### Get All Monsters
-GET http://localhost:8080/monsters HTTP/1.1
+GET {{host}}/monsters HTTP/1.1
 
 ### Get Monster By Id
-GET http://localhost:8080/monsters/653aefdf7e31c8e546fd97a9 HTTP/1.1 
+GET {{host}}/monsters/653aefdf7e31c8e546fd97a9 HTTP/1.1 
 
 ### Create Monster
-POST http://localhost:8080/monsters HTTP/1.1
+POST {{host}}/monsters HTTP/1.1
 content-type: application/json
 
 {
@@ -40,3 +59,15 @@ content-type: application/json
     "int": 8,
     "cha": 10
 }
+
+### Update Monster
+POST {{host}}/spells/653af14334871ac29de9fb37 HTTP/1.1
+content-type: application/json
+{
+    "str": 18
+}
+
+### Delete Spell
+POST {{host}}/spells HTTP/1.1
+
+
