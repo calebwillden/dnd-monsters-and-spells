@@ -5,7 +5,7 @@
     "description": "This API returns information about D&D monsters and spells.",
     "version": "1.0.0"
   },
-  "host": "cse341-b19z.onrender.com",
+  "host": "dnd-monsters-and-spells.onrender.com",
   "basePath": "/",
   "tags": [
     "Monsters",
