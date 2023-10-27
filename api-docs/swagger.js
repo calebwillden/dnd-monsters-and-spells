@@ -12,7 +12,7 @@ const doc = {
     schemes: ['https'],
     tags: ['Monsters', 'Spells'],
     definitions: {
-        MonsterId: '650f46b8270b40a1fb152952',
+        MonsterId: '653adc447f20bf502d67d4b8',
         MonsterInput: {
             name: 'Flumph',
             str: 10,

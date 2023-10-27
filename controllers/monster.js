@@ -76,8 +76,7 @@ const createMonster = async (req, res) => {
     }
 
     // Create Monster
-    const monster = new MonsterModel(monsterData);
-    await monster.save();
+    const monster = await MonsterModel.create(monsterData);
 
     // Return success message
     res.status(201).json({

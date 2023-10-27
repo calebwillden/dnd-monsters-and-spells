@@ -35,14 +35,17 @@ const getSpellById = async (req, res) => {
         }   
     */
 
-    const spell = await SpellModel.findById(req.params.id);
-    res.send(spell);
-
-    /*   #swagger.responses[200] = {
-           description: 'Retrieved',
-           schema: { $ref: '#/definitions/SpellOutput' }
-        }   
-    */
+    try {
+        const spell = await SpellModel.findById(req.params.id);
+        res.send(spell);
+        /*  #swagger.responses[200] = {
+                description: 'Retrieved',
+                schema: { $ref: '#/definitions/SpellOutput' }
+            }   
+        */
+    } catch (err) {
+        res.status(500).send({ info: 'ERR_SERVER_ERROR' });
+    }
 };
 
 /*******************************************************************************
@@ -68,8 +71,7 @@ const createSpell = async (req, res) => {
     }
 
     // Create Spell
-    const spell = new SpellModel(spellData);
-    await spell.save();
+    const spell = await SpellModel.create(spellData);
 
     // Return success message
     res.status(201).send({
