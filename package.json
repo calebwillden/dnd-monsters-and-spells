@@ -8,8 +8,21 @@
         "devstart": "nodemon server.js",
         "swagger": "nodemon ./api-docs/swagger.js --ignore ./api-docs/*.json"
     },
-    "author": "Caleb Willden",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/calebwillden/dnd-monsters-and-spells"
+    },
     "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/calebwillden/dnd-monsters-and-spells/issues"
+    },
+    "homepage": "https://github.com/calebwillden/dnd-monsters-and-spells#readme",
+    "engines": {
+        "npm": "8.19.2",
+        "node": "18.12.1",
+        "mongoose": "7.5.3"
+    },
+    "author": "Caleb Willden",
     "dependencies": {
         "body-parser": "^1.20.2",
         "cors": "^2.8.5",
