@@ -1,0 +1,33 @@
+{
+    "name": "dnd-monsters-and-spells",
+    "version": "1.0.0",
+    "description": "Look at D&D monsters and spells.",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "devstart": "nodemon server.js",
+        "swagger": "nodemon ./api-docs/swagger.js --ignore ./api-docs/*.json"
+    },
+    "author": "Caleb Willden",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "mongodb": "^6.2.0",
+        "mongoose": "^7.6.3",
+        "nodemon": "^3.0.1"
+    },
+    "devDependencies": {
+        "eslint": "^8.52.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.1",
+        "prettier": "^3.0.3",
+        "swagger-autogen": "^2.23.6",
+        "swagger-ui-express": "^5.0.0"
+    },
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config .prettierrc"
+}

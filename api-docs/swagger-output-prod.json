@@ -1,0 +1,421 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "D&D Monsters & Spells API",
+    "description": "This API returns information about D&D monsters and spells.",
+    "version": "1.0.0"
+  },
+  "host": "cse341-b19z.onrender.com",
+  "basePath": "/",
+  "tags": [
+    "Monsters",
+    "Spells"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/monsters/": {
+      "get": {
+        "tags": [
+          "Monsters"
+        ],
+        "summary": "Get all monsters.",
+        "description": "Retrieves all monsters from the database.",
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/MonsterOutput"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Monsters"
+        ],
+        "summary": "Create a monster.",
+        "description": "Create a monster and insert it into the database.",
+        "parameters": [
+          {
+            "name": "monster",
+            "in": "body",
+            "description": "The monster object to be inserted.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MonsterInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "info": {
+                  "type": "string",
+                  "example": "MONSTER_CREATED"
+                },
+                "monsterId": {
+                  "$ref": "#/definitions/MonsterId"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/monsters/{id}": {
+      "get": {
+        "tags": [
+          "Monsters"
+        ],
+        "summary": "Get a monster by ID.",
+        "description": "Retrieves one monster from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID for the monster to be retrieved.",
+            "schema": {
+              "$ref": "#/definitions/MonsterId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/MonsterOutput"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Monsters"
+        ],
+        "summary": "Update a monster.",
+        "description": "Update one monster in the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID for the monster to be retrieved.",
+            "schema": {
+              "$ref": "#/definitions/MonsterId"
+            }
+          },
+          {
+            "name": "monster",
+            "in": "body",
+            "description": "An object of monster properties to be updated and their new values.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MonsterInput"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Monsters"
+        ],
+        "summary": "Delete a monster.",
+        "description": "Drops one monster from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID for the monster to be deleted.",
+            "schema": {
+              "$ref": "#/definitions/MonsterId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/spells/": {
+      "get": {
+        "tags": [
+          "Spells"
+        ],
+        "summary": "Get all spells.",
+        "description": "Retrieves all spells from the database.",
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/SpellOutput"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Spells"
+        ],
+        "summary": "Create a spell.",
+        "description": "Create a spell and insert it into the database.",
+        "parameters": [
+          {
+            "name": "spell",
+            "in": "body",
+            "description": "The spell object to be inserted.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpellInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "contactId": {
+                  "$ref": "#/definitions/SpellId"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spells/{id}": {
+      "get": {
+        "tags": [
+          "Spells"
+        ],
+        "summary": "Get a spell by ID.",
+        "description": "Retrieves one spell from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID for the contact to be retrieved.",
+            "schema": {
+              "$ref": "#/definitions/SpellId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/SpellOutput"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Spells"
+        ],
+        "summary": "Update a spell.",
+        "description": "Update one spell in the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID for the spell to be retrieved.",
+            "schema": {
+              "$ref": "#/definitions/SpellId"
+            }
+          },
+          {
+            "name": "spell",
+            "in": "body",
+            "description": "An object of spell properties to be updated and their new values.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpellInput"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Updated"
+          },
+          "500": {
+            "description": "Database Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Spells"
+        ],
+        "summary": "Delete a spell.",
+        "description": "Drops one spell from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID for the spell to be deleted.",
+            "schema": {
+              "$ref": "#/definitions/SpellId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "MonsterId": {
+      "type": "string",
+      "example": "650f46b8270b40a1fb152952"
+    },
+    "MonsterInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Flumph"
+        },
+        "str": {
+          "type": "number",
+          "example": 10
+        },
+        "dex": {
+          "type": "number",
+          "example": 12
+        },
+        "con": {
+          "type": "number",
+          "example": 8
+        },
+        "wis": {
+          "type": "number",
+          "example": 12
+        },
+        "int": {
+          "type": "number",
+          "example": 8
+        },
+        "cha": {
+          "type": "number",
+          "example": 10
+        }
+      }
+    },
+    "MonsterOutput": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "653aefdf7e31c8e546fd97a9"
+        },
+        "name": {
+          "type": "string",
+          "example": "Flumph"
+        },
+        "str": {
+          "type": "number",
+          "example": 10
+        },
+        "dex": {
+          "type": "number",
+          "example": 12
+        },
+        "con": {
+          "type": "number",
+          "example": 8
+        },
+        "wis": {
+          "type": "number",
+          "example": 12
+        },
+        "int": {
+          "type": "number",
+          "example": 8
+        },
+        "cha": {
+          "type": "number",
+          "example": 10
+        }
+      }
+    },
+    "MonsterOutputArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MonsterOutput"
+      }
+    },
+    "SpellId": {
+      "type": "string",
+      "example": "653adc767f20bf502d6802e6"
+    },
+    "SpellInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Burning Hands"
+        },
+        "description": {
+          "type": "string",
+          "example": "Shoots fire. Woo."
+        }
+      }
+    },
+    "SpellOutput": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/SpellId"
+        },
+        "name": {
+          "type": "string",
+          "example": "Burning Hands"
+        },
+        "description": {
+          "type": "string",
+          "example": "Shoots fire. Woo."
+        }
+      }
+    },
+    "SpellOutputArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SpellOutput"
+      }
+    }
+  }
+}

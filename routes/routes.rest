@@ -1,0 +1,42 @@
+//*******************************************************************************
+// Localhost
+//*******************************************************************************
+### Root
+GET http://localhost:8080/ HTTP/1.1
+
+### SPELLS
+### Get All Spells
+GET http://localhost:8080/spells HTTP/1.1
+
+### Get Spell By Id
+GET http://localhost:8080/spells/653adc767f20bf502d6802e6 HTTP/1.1
+
+### Create Spell
+POST http://localhost:8080/spells HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Magic Missile",
+    "description": "Pew pew!"
+}
+
+### MONSTERS
+### Get All Monsters
+GET http://localhost:8080/monsters HTTP/1.1
+
+### Get Monster By Id
+GET http://localhost:8080/monsters/653aefdf7e31c8e546fd97a9 HTTP/1.1 
+
+### Create Monster
+POST http://localhost:8080/monsters HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Flumph",
+    "str": 10,
+    "dex": 12,
+    "con": 8,
+    "wis": 12,
+    "int": 8,
+    "cha": 10
+}
