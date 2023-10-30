@@ -31,10 +31,10 @@ content-type: application/json
 
 ### Update Spell
 PUT {{host}}/spells/653af14334871ac29de9fb37 HTTP/1.1
-
 content-type: application/json
+
 {
-    "description": "Pew pew PEW!"
+    "name": "ASDASDASDASDAS"
 }
 
 ### Delete Spell
@@ -48,7 +48,7 @@ POST {{host}}/spells HTTP/1.1
 GET {{host}}/monsters HTTP/1.1
 
 ### Get Monster By Id
-GET {{host}}/monsters/653aefdf7e31c8e546fd97a9 HTTP/1.1 
+GET {{host}}/monsters/65402df44284af0a3b4b5810 HTTP/1.1 
 
 ### Create Monster
 POST {{host}}/monsters HTTP/1.1
@@ -69,7 +69,7 @@ PUT {{host}}/monsters/65402df44284af0a3b4b5810 HTTP/1.1
 content-type: application/json
 
 {
-    "str": 18
+    "str": 10
 }
 
 ### Delete Monster

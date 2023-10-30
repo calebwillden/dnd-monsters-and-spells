@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 
-const validateMonster = [
+const validateCreateMonster = [
     body('name').isString(),
     body('str').isInt(),
     body('dex').isInt(),
@@ -10,6 +10,26 @@ const validateMonster = [
     body('cha').isInt()
 ];
 
-const validateSpell = [body('name').isString(), body('description').isString()];
+const validateUpdateMonster = [
+    body('name').isString().optional(),
+    body('str').isInt().optional(),
+    body('dex').isInt().optional(),
+    body('con').isInt().optional(),
+    body('int').isInt().optional(),
+    body('wis').isInt().optional(),
+    body('cha').isInt().optional()
+];
 
-module.exports = { validateMonster, validateSpell };
+const validateCreateSpell = [body('name').isString(), body('description').isString()];
+
+const validateUpdateSpell = [
+    body('name').isString().optional(),
+    body('description').isString().optional()
+];
+
+module.exports = {
+    validateCreateMonster,
+    validateCreateSpell,
+    validateUpdateMonster,
+    validateUpdateSpell
+};

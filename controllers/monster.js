@@ -146,8 +146,8 @@ const updateMonster = async (req, res) => {
         console.log('Updated.');
         res.status(204).send();
         /*  #swagger.responses[204] = {
-            description: 'Updated'
-        }   
+                description: 'Updated'
+            }   
         */
     } catch (err) {
         console.log(err);

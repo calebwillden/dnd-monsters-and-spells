@@ -138,7 +138,7 @@ const updateSpell = async (req, res) => {
         }
 
         // Successful Update
-        console.log('Deleted.');
+        console.log('Updated.');
         res.status(204).send();
         /*  #swagger.responses[204] = {
                 description: 'Updated'
