@@ -23,13 +23,15 @@ GET {{host}}/spells/653af14334871ac29de9fb37 HTTP/1.1
 ### Create Spell
 POST {{host}}/spells HTTP/1.1
 content-type: application/json
+
 {
     "name": "Magic Missile",
     "description": "Pew pew!"
 }
 
 ### Update Spell
-POST {{host}}/spells/653af14334871ac29de9fb37 HTTP/1.1
+PUT {{host}}/spells/653af14334871ac29de9fb37 HTTP/1.1
+
 content-type: application/json
 {
     "description": "Pew pew PEW!"

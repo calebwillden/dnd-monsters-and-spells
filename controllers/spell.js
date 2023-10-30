@@ -1,4 +1,5 @@
 const SpellModel = require('../models/spell.js');
+const { validationResult } = require('express-validator');
 
 /*******************************************************************************
  * GET ALL SPELLS
@@ -64,14 +65,22 @@ const createSpell = async (req, res) => {
         }   
     */
 
+    // Return validation errors, if any
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        res.send({ errors: result.array() });
+        return;
+    }
+
     // Verify all fields are present
     const spellData = req.body;
-    if (typeof spellData.name != 'string' || typeof spellData.description != 'string') {
-        throw 'ERR_INVALID_OR_MISSING_FIELD';
-    }
+
+    console.log('Creating spell...');
 
     // Create Spell
     const spell = await SpellModel.create(spellData);
+
+    console.log('Created.');
 
     // Return success message
     res.status(201).send({
@@ -157,7 +166,7 @@ const deleteSpell = async (req, res) => {
     console.log('Deleting Spell...');
 
     const id = req.params.id;
-    const result = await SpellModel.findByIdAndDelete(id);
+    await SpellModel.findByIdAndDelete(id);
     console.log('Complete.');
 
     res.status(200).send();

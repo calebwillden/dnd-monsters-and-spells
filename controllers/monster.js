@@ -1,4 +1,5 @@
 const MonsterModel = require('../models/monster.js');
+const { validationResult } = require('express-validator');
 
 /*******************************************************************************
  * GET ALL MONSTERS
@@ -61,19 +62,15 @@ const createMonster = async (req, res) => {
         }   
     */
 
+    // Return validation errors, if any
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        res.send({ errors: result.array() });
+        return;
+    }
+
     // Verify all fields are present
     const monsterData = req.body;
-    if (
-        typeof monsterData.name != 'string' ||
-        typeof monsterData.str != 'number' ||
-        typeof monsterData.dex != 'number' ||
-        typeof monsterData.wis != 'number' ||
-        typeof monsterData.int != 'number' ||
-        typeof monsterData.wis != 'number' ||
-        typeof monsterData.cha != 'number'
-    ) {
-        throw 'ERR_INVALID_OR_MISSING_FIELD';
-    }
 
     // Create Monster
     const monster = await MonsterModel.create(monsterData);
