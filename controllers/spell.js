@@ -10,8 +10,13 @@ const getAllSpells = async (req, res) => {
     //  #swagger.summary = 'Get all spells.'
     //  #swagger.description = 'Retrieves all spells from the database.'
 
-    const allSpells = await SpellModel.find();
-    res.send(allSpells);
+    try {
+        const allSpells = await SpellModel.find();
+        res.send(allSpells);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 
     /*   #swagger.responses[200] = {
            description: 'Retrieved',
@@ -38,14 +43,15 @@ const getSpellById = async (req, res) => {
 
     try {
         const spell = await SpellModel.findById(req.params.id);
-        res.send(spell);
+        res.json(spell);
         /*  #swagger.responses[200] = {
                 description: 'Retrieved',
                 schema: { $ref: '#/definitions/SpellOutput' }
             }   
         */
     } catch (err) {
-        res.status(500).send({ info: 'ERR_SERVER_ERROR' });
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 
@@ -65,35 +71,37 @@ const createSpell = async (req, res) => {
         }   
     */
 
-    // Return validation errors, if any
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-        res.send({ errors: result.array() });
-        return;
-    }
+    try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.json({ errors: result.array() });
+            return;
+        }
 
-    // Verify all fields are present
-    const spellData = req.body;
+        // Create Spell
+        console.log('Creating spell...');
 
-    console.log('Creating spell...');
+        const spellData = req.body;
+        const spell = await SpellModel.create(spellData);
 
-    // Create Spell
-    const spell = await SpellModel.create(spellData);
+        console.log('Created.');
 
-    console.log('Created.');
-
-    // Return success message
-    res.status(201).send({
-        spellId: spell._id
-    });
-
-    /*  #swagger.responses[201] = {
+        // Return success message
+        res.status(201).json({
+            spellId: spell._id
+        });
+        /*  #swagger.responses[201] = {
             description: 'Created',
             schema: {
                 contactId: { $ref: '#/definitions/SpellId' }
             }
         } 
-    */
+        */
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 };
 
 /*******************************************************************************
@@ -130,20 +138,15 @@ const updateSpell = async (req, res) => {
         }
 
         // Successful Update
-        console.log('Complete.');
+        console.log('Deleted.');
         res.status(204).send();
         /*  #swagger.responses[204] = {
                 description: 'Updated'
             }   
         */
     } catch (err) {
-        // Send an Error
-        res.status(500).send({ info: err });
-        console.log(`Aborted. Error: ${err}`);
-        /*  #swagger.responses[500] = {
-                description: 'Database Error'
-            }   
-        */
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 
@@ -163,18 +166,28 @@ const deleteSpell = async (req, res) => {
         }
     */
 
-    console.log('Deleting Spell...');
+    try {
+        console.log('Deleting Spell...');
 
-    const id = req.params.id;
-    await SpellModel.findByIdAndDelete(id);
-    console.log('Complete.');
+        const id = req.params.id;
+        const result = await SpellModel.findByIdAndDelete(id);
 
-    res.status(200).send();
-
-    /*  #swagger.responses[200] = {
-            description: 'Deleted'
+        // Update Error (result is null)
+        if (!result) {
+            throw 'ERR_DATABASE_ERROR';
         }
-    */
+
+        console.log('Complete.');
+
+        res.status(200).send();
+        /*  #swagger.responses[200] = {
+               description: 'Deleted'
+            }
+        */
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 };
 
 module.exports = {

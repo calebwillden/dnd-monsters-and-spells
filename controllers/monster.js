@@ -10,8 +10,13 @@ const getAllMonsters = async (req, res) => {
     //  #swagger.summary = 'Get all monsters.'
     //  #swagger.description = 'Retrieves all monsters from the database.'
 
-    const allMonsters = await MonsterModel.find();
-    res.send(allMonsters);
+    try {
+        const allMonsters = await MonsterModel.find();
+        res.send(allMonsters);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 
     /*   #swagger.responses[200] = {
            description: 'Retrieved',
@@ -36,8 +41,13 @@ const getMonsterById = async (req, res) => {
         }   
     */
 
-    const monster = await MonsterModel.findById(req.params.id);
-    res.send(monster);
+    try {
+        const monster = await MonsterModel.findById(req.params.id);
+        res.send(monster);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 
     /*   #swagger.responses[200] = {
            description: 'Retrieved',
@@ -62,32 +72,39 @@ const createMonster = async (req, res) => {
         }   
     */
 
-    // Return validation errors, if any
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-        res.send({ errors: result.array() });
-        return;
+    try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.send({ errors: result.array() });
+            return;
+        }
+
+        // Create Monster
+        console.log('Creating Monster...');
+
+        const monsterData = req.body;
+        const monster = await MonsterModel.create(monsterData);
+
+        console.log('Created.');
+
+        // Return success message
+        res.status(201).json({
+            info: 'MONSTER_CREATED',
+            monsterId: monster._id
+        });
+        /*  #swagger.responses[201] = {
+                description: 'Created',
+                schema: {
+                    info: 'MONSTER_CREATED',
+                    monsterId: { $ref: '#/definitions/MonsterId' }
+                }
+            } 
+        */
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
-
-    // Verify all fields are present
-    const monsterData = req.body;
-
-    // Create Monster
-    const monster = await MonsterModel.create(monsterData);
-
-    // Return success message
-    res.status(201).json({
-        info: 'MONSTER_CREATED',
-        monsterId: monster._id
-    });
-    /*  #swagger.responses[201] = {
-            description: 'Created',
-            schema: {
-                info: 'MONSTER_CREATED',
-                monsterId: { $ref: '#/definitions/MonsterId' }
-            }
-        } 
-    */
 };
 
 /*******************************************************************************
@@ -112,10 +129,30 @@ const updateMonster = async (req, res) => {
             schema: { $ref: '#/definitions/MonsterInput' }
         }   
     */
-    /*  #swagger.responses[204] = {
+
+    try {
+        console.log('Updating Monster...');
+
+        const id = req.params.id;
+        const updates = req.body;
+        const result = await MonsterModel.findByIdAndUpdate(id, updates);
+
+        // Update Error (result is null)
+        if (!result) {
+            throw 'ERR_DATABASE_ERROR';
+        }
+
+        // Successful Update
+        console.log('Updated.');
+        res.status(204).send();
+        /*  #swagger.responses[204] = {
             description: 'Updated'
         }   
-    */
+        */
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 };
 
 /*******************************************************************************
@@ -133,10 +170,28 @@ const deleteMonster = async (req, res) => {
             schema: { $ref: '#/definitions/MonsterId' }
         }
     */
-    /*  #swagger.responses[200] = {
-            description: 'Deleted'
+    try {
+        console.log('Deleting Monster...');
+
+        const id = req.params.id;
+        const result = await MonsterModel.findByIdAndDelete(id);
+
+        // Update Error (result is null)
+        if (!result) {
+            throw 'ERR_DATABASE_ERROR';
         }
-    */
+
+        console.log('Deleted.');
+
+        res.status(200).send();
+        /*  #swagger.responses[200] = {
+           description: 'Deleted'
+        }
+        */
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 };
 
 module.exports = {
