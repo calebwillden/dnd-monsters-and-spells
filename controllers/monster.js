@@ -20,7 +20,7 @@ const getAllMonsters = async (req, res) => {
 
     /*   #swagger.responses[200] = {
            description: 'Retrieved',
-           schema: { $ref: '#/definitions/MonsterOutput' }
+           schema: { $ref: '#/definitions/MonsterOutputArray' }
         }   
     */
 };

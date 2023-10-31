@@ -20,7 +20,7 @@ const getAllSpells = async (req, res) => {
 
     /*   #swagger.responses[200] = {
            description: 'Retrieved',
-           schema: { $ref: '#/definitions/SpellOutput' }
+           schema: { $ref: '#/definitions/SpellOutputArray' }
         }   
     */
 };

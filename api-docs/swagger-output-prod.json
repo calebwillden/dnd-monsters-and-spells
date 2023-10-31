@@ -26,8 +26,11 @@
           "200": {
             "description": "Retrieved",
             "schema": {
-              "$ref": "#/definitions/MonsterOutput"
+              "$ref": "#/definitions/MonsterOutputArray"
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -49,6 +52,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created",
             "schema": {
@@ -66,6 +72,9 @@
                 "name": "main"
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -95,6 +104,9 @@
             "schema": {
               "$ref": "#/definitions/MonsterOutput"
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -128,6 +140,9 @@
         "responses": {
           "204": {
             "description": "Updated"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -152,6 +167,9 @@
         "responses": {
           "200": {
             "description": "Deleted"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -167,8 +185,11 @@
           "200": {
             "description": "Retrieved",
             "schema": {
-              "$ref": "#/definitions/SpellOutput"
+              "$ref": "#/definitions/SpellOutputArray"
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -190,6 +211,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created",
             "schema": {
@@ -203,6 +227,9 @@
                 "name": "main"
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -232,6 +259,9 @@
             "schema": {
               "$ref": "#/definitions/SpellOutput"
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -267,7 +297,7 @@
             "description": "Updated"
           },
           "500": {
-            "description": "Database Error"
+            "description": "Internal Server Error"
           }
         }
       },
@@ -292,6 +322,9 @@
         "responses": {
           "200": {
             "description": "Deleted"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
