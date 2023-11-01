@@ -1,33 +1,79 @@
-const { body } = require('express-validator');
+const { check } = require('express-validator');
+
+const validateId = [
+    check('id')
+        .isAlphanumeric()
+        .isLength({ min: 24, max: 24 })
+        .withMessage('ID must be an alphanumeric string of exactly 24 characters.')
+];
 
 const validateCreateMonster = [
-    body('name').isString(),
-    body('str').isInt(),
-    body('dex').isInt(),
-    body('con').isInt(),
-    body('int').isInt(),
-    body('wis').isInt(),
-    body('cha').isInt()
+    check('name').isString(),
+    check('str')
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('dex')
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('con')
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('int')
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('wis')
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('cha')
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.')
 ];
 
 const validateUpdateMonster = [
-    body('name').isString().optional(),
-    body('str').isInt().optional(),
-    body('dex').isInt().optional(),
-    body('con').isInt().optional(),
-    body('int').isInt().optional(),
-    body('wis').isInt().optional(),
-    body('cha').isInt().optional()
+    ...validateId,
+    check('name').isString().optional(),
+    check('str')
+        .isInt()
+        .optional()
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('dex')
+        .isInt()
+        .optional()
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('con')
+        .isInt()
+        .optional()
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('int')
+        .isInt()
+        .optional()
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('wis')
+        .isInt()
+        .optional()
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.'),
+    check('cha')
+        .isInt()
+        .optional()
+        .isInt({ min: 1, max: 30 })
+        .withMessage('Ability score must be an integer between 1 and 30.')
 ];
 
-const validateCreateSpell = [body('name').isString(), body('description').isString()];
+const validateCreateSpell = [check('name').isString(), check('description').isString()];
 
 const validateUpdateSpell = [
-    body('name').isString().optional(),
-    body('description').isString().optional()
+    ...validateId,
+    check('name').isString().optional(),
+    check('description').isString().optional()
 ];
 
 module.exports = {
+    validateId,
     validateCreateMonster,
     validateCreateSpell,
     validateUpdateMonster,

@@ -1,5 +1,5 @@
 const MonsterModel = require('../models/monster.js');
-const { validationResult } = require('express-validator');
+const { validationResult, matchedData } = require('express-validator');
 
 /*******************************************************************************
  * GET ALL MONSTERS
@@ -42,6 +42,13 @@ const getMonsterById = async (req, res) => {
     */
 
     try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.status(400).json({ errors: result.array() });
+            return;
+        }
+
         const monster = await MonsterModel.findById(req.params.id);
         res.send(monster);
     } catch (err) {
@@ -76,14 +83,14 @@ const createMonster = async (req, res) => {
         // Return validation errors, if any
         const result = validationResult(req);
         if (!result.isEmpty()) {
-            res.send({ errors: result.array() });
+            res.status(400).json({ errors: result.array() });
             return;
         }
 
         // Create Monster
         console.log('Creating Monster...');
 
-        const monsterData = req.body;
+        const monsterData = matchedData(req); // Filter out extra fields
         const monster = await MonsterModel.create(monsterData);
 
         console.log('Created.');
@@ -131,14 +138,21 @@ const updateMonster = async (req, res) => {
     */
 
     try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.status(400).json({ errors: result.array() });
+            return;
+        }
+
         console.log('Updating Monster...');
 
         const id = req.params.id;
-        const updates = req.body;
-        const result = await MonsterModel.findByIdAndUpdate(id, updates);
+        const updates = matchedData(req); // Filter out extra fields
+        const updateResult = await MonsterModel.findByIdAndUpdate(id, updates);
 
         // Update Error (result is null)
-        if (!result) {
+        if (!updateResult) {
             throw 'ERR_DATABASE_ERROR';
         }
 
@@ -171,13 +185,20 @@ const deleteMonster = async (req, res) => {
         }
     */
     try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.status(400).json({ errors: result.array() });
+            return;
+        }
+
         console.log('Deleting Monster...');
 
         const id = req.params.id;
-        const result = await MonsterModel.findByIdAndDelete(id);
+        const deleteResult = await MonsterModel.findByIdAndDelete(id);
 
         // Update Error (result is null)
-        if (!result) {
+        if (!deleteResult) {
             throw 'ERR_DATABASE_ERROR';
         }
 

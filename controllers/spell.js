@@ -1,5 +1,5 @@
 const SpellModel = require('../models/spell.js');
-const { validationResult } = require('express-validator');
+const { validationResult, matchedData } = require('express-validator');
 
 /*******************************************************************************
  * GET ALL SPELLS
@@ -42,6 +42,13 @@ const getSpellById = async (req, res) => {
     */
 
     try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.status(400).json({ errors: result.array() });
+            return;
+        }
+
         const spell = await SpellModel.findById(req.params.id);
         res.json(spell);
         /*  #swagger.responses[200] = {
@@ -75,14 +82,14 @@ const createSpell = async (req, res) => {
         // Return validation errors, if any
         const result = validationResult(req);
         if (!result.isEmpty()) {
-            res.json({ errors: result.array() });
+            res.status(400).json({ errors: result.array() });
             return;
         }
 
         // Create Spell
         console.log('Creating spell...');
 
-        const spellData = req.body;
+        const spellData = matchedData(req); // Filter out extra fields
         const spell = await SpellModel.create(spellData);
 
         console.log('Created.');
@@ -126,14 +133,21 @@ const updateSpell = async (req, res) => {
         }   */
 
     try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.status(400).json({ errors: result.array() });
+            return;
+        }
+
         console.log('Updating Spell...');
 
         const id = req.params.id;
-        const updates = req.body;
-        const result = await SpellModel.findByIdAndUpdate(id, updates);
+        const updates = matchedData(req); // Filter out extra fields
+        const updateResult = await SpellModel.findByIdAndUpdate(id, updates);
 
         // Update Error (result is null)
-        if (!result) {
+        if (!updateResult) {
             throw 'ERR_DATABASE_ERROR';
         }
 
@@ -167,13 +181,20 @@ const deleteSpell = async (req, res) => {
     */
 
     try {
+        // Return validation errors, if any
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.status(400).json({ errors: result.array() });
+            return;
+        }
+
         console.log('Deleting Spell...');
 
         const id = req.params.id;
-        const result = await SpellModel.findByIdAndDelete(id);
+        const deleteResult = await SpellModel.findByIdAndDelete(id);
 
         // Update Error (result is null)
-        if (!result) {
+        if (!deleteResult) {
             throw 'ERR_DATABASE_ERROR';
         }
 

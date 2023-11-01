@@ -33,7 +33,7 @@ const doc = {
             cha: 10
         },
         MonsterOutputArray: [{ $ref: '#/definitions/MonsterOutput' }],
-        SpellId: '653adc767f20bf502d6802e6',
+        SpellId: '65418c8aa845f2eb155702ce',
         SpellInput: {
             name: 'Burning Hands',
             description: 'Shoots fire. Woo.'
