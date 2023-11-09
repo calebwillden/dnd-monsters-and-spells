@@ -5,11 +5,12 @@ const {
     validateCreateSpell,
     validateUpdateSpell
 } = require('../middleware/validation.js');
+const { requiresAuth } = require('express-openid-connect');
 
 router.get('/', controller.getAllSpells);
 router.get('/:id', validateId, controller.getSpellById);
-router.post('/', validateCreateSpell, controller.createSpell);
-router.put('/:id', validateUpdateSpell, controller.updateSpell);
-router.delete('/:id', validateId, controller.deleteSpell);
+router.post('/', requiresAuth(), validateCreateSpell, controller.createSpell);
+router.put('/:id', requiresAuth(), validateUpdateSpell, controller.updateSpell);
+router.delete('/:id', requiresAuth(), validateId, controller.deleteSpell);
 
 module.exports = router;

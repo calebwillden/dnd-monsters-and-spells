@@ -1,6 +1,7 @@
 require('dotenv').config();
 const router = require('express').Router();
 const swaggerUi = require('swagger-ui-express');
+const { requiresAuth } = require('express-openid-connect');
 
 // Choose a JSON based on the environment
 const swaggerDocPath =
@@ -15,6 +16,7 @@ router.use('/api-docs', swaggerUi.serve);
 // Docs Route
 router.get(
     '/api-docs',
+    requiresAuth(),
     swaggerUi.setup(swaggerDoc)
     // #swagger.ignore = true
 );
