@@ -1,14 +1,22 @@
 const router = require('express').Router();
 const { auth, requiresAuth } = require('express-openid-connect');
+require('dotenv').config();
 
 /*******************************************************************************
  * O AUTH
  ******************************************************************************/
+const baseURL =
+    process.env.HOST == 'localhost'
+        ? `${process.env.SCHEME}://${process.env.HOST}:${process.env.PORT}`
+        : `${process.env.SCHEME}://${process.env.HOST}`;
+
+console.log(baseURL);
+
 const config = {
     authRequired: false,
     auth0Logout: true,
     secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'http://localhost:8080',
+    baseURL: baseURL,
     clientID: 'YmfFsLEPUfajp5XNCctHUAhp7GJNO6Ba',
     issuerBaseURL: 'https://dev-xtkmrw7t45ao5452.us.auth0.com'
 };
